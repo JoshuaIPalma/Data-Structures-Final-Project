@@ -1,0 +1,70 @@
+============================================================
+README
+Course: DATA STRUCTURES (Fall 2025)
+Team: Joshua P, Ife A, Sudais A
+Date: 12/2/2025
+============================================================
+
+## 1. Build and Run Instructions
+
+### 1.1. Prerequisites
+-Java Development Kit (JDK)
+
+### 1.2. Project Structure
+-The source code is located in the package directory:
+ src/edu/hcu/triage/
+
+### 1.3. How to Run
+Run the main application class, HospitalApp. It accepts one optional argument for the seed data file.
+java edu.hcu.triage.HospitalApp [path/to/patients.csv]
+
+* The application will start with a **Command Line Interface (CLI) menu**.
+* The system should gracefully handle invalid inputs and never crash.
+
+---
+
+## 2. Design Decisions and Data Structures
+
+The system uses three core data structures as required:
+
+| Component | Data Structure | Rationale (Why was this structure chosen?) |
+| Patient Registry | HashMap<String, Patient> | Provides O(1) (average time) lookup and storage by the unique patient ID. |
+| Triage Queue | PriorityQueue<Patient> | Ensures the patient with the highest severity is always dequeued next, with O(log n) performance for enqueue/dequeue. |
+| Triage Ordering | TriageOrder Comparator | Custom Comparator to implement the stable triage policy: 1) Higher severity first. 2) Smaller arrivalSeq for ties (FIFO). |
+| Treatment Log | LinkedList<TreatedCase> | Chosen for O(1) append-only operation, maintaining a chronological log of treated patients. |
+
+---
+
+## 3. Key Invariants and Policies
+
+### 3.1. Patient Identity and Equality
+* The Patient object's equals()* and hashCode() methods are based **only on the 'id' field. This ensures correctness in the HashMap registry.
+
+### 3.2. Severity Update Policy
+* When a patient's severity is updated in the PatientRegistry, their position in the TriageQueue is NOT automatically changed.
+* To re-triage a patient, they must be explicitly re-enqueued (or state your chosen policy clearly, especially if implementing the Extra Credit feature).
+
+### 3.3. Triage Stability
+* The TriageOrder Comparator ensures that for any two patients with equal severity, the one with the earlier arrival sequence number (FIFO) is prioritized.
+
+### 3.4. Input/CSV Handling
+* CLI Inputs: All user inputs are validated (e.g., bounds for age/severity, non-empty IDs) to prevent crashes.
+* CSV Load: The CsvIO utility will skip malformed lines in patients.csv and print a warning with the line number to the console.
+
+---
+
+## 4. Known Issues
+
+### 4.1. Known Issues
+* [List any current bugs, limitations, or incomplete features here. E.g., "The CsvIO utility does not currently handle commas within the 'notes' field upon export."]
+* [Example: "The 'update patient' CLI command requires re-entering all patient fields, not just the field to be updated."]
+
+---
+
+## 5. Team roles
+* Josh-
+
+* Ife-
+
+* Sudais-
+
