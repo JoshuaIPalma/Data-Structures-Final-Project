@@ -23,12 +23,6 @@ public class Patient {
     // TODO: constructor(s) with validation (null/empty id, bounds for age/severity)
     public Patient(String id, String name, int age, int severity, Instant arrival, long arrivalSeq) {
         if (id == null) throw new NullPointerException("------Id cannot be null-----");
-        else if (id.charAt(0) != 'P' || id.length() != 5) throw new IllegalArgumentException("-----Patient Id is not valid-----");
-        else {
-            if (Character.isDigit(id.charAt(1)) && Character.isDigit(id.charAt(2)) && Character.isDigit(id.charAt(3)) && Character.isDigit(id.charAt(4))) {
-                throw new IllegalArgumentException("-----Patient Id is not valid-----");
-            }
-        }
         this.id = id;
 
         if  (name == null) throw new NullPointerException("-----Name cannot be null-----");
