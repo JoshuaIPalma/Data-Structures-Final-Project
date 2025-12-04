@@ -177,23 +177,27 @@ public class HospitalApp {
 
             } else if (option == 9) {
 
-//                try {
-//                    System.out.print("Number of patients: ");
-//                    int n = in.nextInt();
-//
-//                    System.out.print("Random seed: ");
-//                    long seed = in.nextLong();
-//
-//                    System.out.print("Use skewed distribution (realistic)? (y/n): ");
-//                    in.nextLine();
-//                    boolean skewed = in.nextLine().equalsIgnoreCase("y");
-//
-//                    SampleWorkloads.performanceBenchmark(registry, triage, n, seed, skewed);
-//
-//                } catch (InputMismatchException e) {
-//                    System.out.println("Invalid input.");
-//                    in.nextLine();
-//                }
+                System.out.print("Workload size: ");
+                int workloadSize = in.nextInt();
+                System.out.print("Enqueue ratio (0.0-1.0): ");
+                double enqueueRatio = in.nextDouble();
+                in.nextLine();
+                System.out.print("Distribution (uniform/skewed): ");
+                String distribution = in.nextLine().trim();
+                System.out.print("Random seed: ");
+                long seed = in.nextLong();
+                in.nextLine();
+
+                long startTime = System.nanoTime();
+                SampleWorkloads.WorkloadResult result = SampleWorkloads.runWorkload(
+                        registry, triage, workloadSize, enqueueRatio, distribution, seed
+                );
+                long endTime = System.nanoTime();
+
+                System.out.println("\n--- Results ---");
+                System.out.println("Time: " + String.format("%.2f", (endTime - startTime) / 1_000_000.0) + " ms");
+                System.out.println("Dequeued: " + result.dequeuesPerformed);
+                System.out.println("Remaining: " + triage.size());
 
             } else if (option == 10) {
                 if (log.size() == 0) {
