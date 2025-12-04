@@ -7,6 +7,11 @@ public class TriageQueue {
     private final PriorityQueue<Patient> pq = new PriorityQueue<>(new TriageOrder());
     //Creates a Priority Queue which is a record of all patients in Triage Order using Triage Comparator
 
+    //Checks to see if queue is empty
+    public boolean isEmpty() {
+        return pq.isEmpty();
+    }
+
     // TODO: enqueue(Patient p)
     public void enqueue(Patient p){
         if(p == null) throw new NullPointerException("-----Patient cannot be null-----");
